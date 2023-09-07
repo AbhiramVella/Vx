@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html layout:decorate="~{base}">
+    <head>
+        <title>Login</title>
+    </head>
+    <div layout:fragment="content">
+        <div class="row mt-5" style="text-align: center;">
+            <div>
+                <a href="/"><img th:src="@{/images/logo.png}" /></a>
+            </div>
+            <div>
+                <h2>Sign in</h2>
+                <div class="container p-3">
+                    <div class="row align-self-center">
+                        <form>
+                            <div class="col-4 offset-4 p-2">
+                                <label for="exampleInputEmail1" class="form-label" style="float: left;">Email</label>
+                              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                            </div>
+                            <div class="col-4 offset-4 p-2">
+                              <label for="exampleInputPassword1" class="form-label" style="float: left;">Password</label>
+                              <input type="password" class="form-control" id="exampleInputPassword1">
+                            </div>
+                            <button type="submit" class="btn btn-light p-2">Continue</button>
+                        </form>
+                    </div>
+                </div>
+                <p style="padding-top: 20px;" class="registerText">Don't have an account? <a href="/patient/register" id="register" style="text-decoration: none;color: black;font-weight: 600;">Register</a></p>
+            </div>
+        </div>
+        <script>
+            $(document).ready(function(){
+                var urlParams = new URLSearchParams(window.location.search);
+                var userType = urlParams.get('userType');
+                if(userType==="patient"){
+                    $("#register").attr("href","/patient/register");
+                }else if(userType==="doctor"){
+                    $("#register").attr("href","/doctor/register");
+                }else{
+                    $(".registerText").hide();
+                }
+            });
+        </script>
+    </div>
+</html>

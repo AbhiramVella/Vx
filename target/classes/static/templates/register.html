@@ -1,0 +1,51 @@
+
+<div class="row" th:fragment="register">
+    <div>
+        <a href="/"><img th:src="@{/images/logo.png}" /></a>
+    </div>
+    <div style="text-align: center;">
+        <h2><span th:text="${name}"></span> Registration Details</h2>
+        <div class="container p-2">
+            <form method="POST" th:action="@{/register}" th:object="${user}" action="#">
+                <div class="col-4 offset-4 p-2">
+                    <label for="firstName" class="form-label" style="float: left;">First Name</label>
+                    <input type="text" class="form-control" id="firstName" th:field="*{firstName}">
+                </div>
+                <div class="col-4 offset-4 p-2">
+                    <label for="lastName" class="form-label" style="float: left;">Last Name</label>
+                    <input type="text" class="form-control" th:field="*{lastName}" id="lastName">
+                </div>
+                <div class="col-4 offset-4 p-2">
+                    <label for="age" class="form-label" style="float: left;">Age</label>
+                    <input type="number" class="form-control" th:field="*{age}" id="exampleInputPassword1">
+                </div>
+                <div class="col-4 offset-4 p-2">
+                    <label for="emailId" class="form-label" style="float: left;">Email</label>
+                    <input type="email" class="form-control" th:field="*{emailId}" id="email">
+                </div>
+                <div class="col-4 offset-4 p-2">
+                    <label for="mobileNumber" class="form-label" style="float: left;">Mobile No</label>
+                    <input type="text" class="form-control" th:field="*{mobileNumber}" id="mobile">
+                </div>
+                <div class="col-4 offset-4 p-2">
+                    <label for="address" class="form-label" style="float: left;">Address</label>
+                    <input type="text" class="form-control" th:field="*{address}" id="address">
+                </div>
+                <div class="col-4 offset-4 p-2">
+                    <label for="password" class="form-label" style="float: left;">Password</label>
+                    <input type="password" class="form-control" th:field="*{password}" id="password">
+                </div>
+<!--                <div class="col-4 offset-4 p-2">
+                    <label for="confirmPassword" class="form-label" style="float: left;">Confirm Password</label>
+                    <input type="password" class="form-control" id="confirmPassword">
+                </div>-->
+                 <div class="col-4 offset-4 p-2 visually-hidden">
+                    <label for="userType" class="form-label" style="float: left;">UserType</label>
+                    <input type="text" class="form-control" id="userType" th:value="${userType}" th:field="*{userType}">
+                </div>
+                <button type="submit" class="btn btn-light p-2">Next</button>
+            </form>
+        </div>
+        <p class="p-3">Already existing customers can <a th:href="${loginLink}" style="text-decoration: none;color: black;font-weight: 600;">LOGIN</a></p>
+    </div>
+</div>

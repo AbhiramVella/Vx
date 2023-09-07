@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html layout:decorate="~{base}">
+    <head>
+        <title>Vaccine Care</title>
+    </head>
+    <div layout:fragment="content">
+        <div class="mt-5">
+            <div class="row">
+                <div class="col-6" style="flow:left;"><h1> <span th:text="${user.firstName}+' '+${user.lastName}"></span></h1></div>
+                <div class="col-6 pt-2"><div id="current-time" style="float: right;"></div></div>
+            </div>
+            <div class="row pt-2">
+                <div class="col-6 pt-2">Age: <span th:text="${user.age}"></span></div>
+<!--                <div class="col-6">
+                    <button class="btn btn-light p-2 border" style="float: right;">Download</button>
+                </div>-->
+            </div>
+            
+            <section class="vaccine pt-4">
+                <tr th:each="appointment : ${appointments}">
+                    <div class="border border-secondary p-4 mt-3">
+                        <div class="row">
+                            <div class="col-4">
+                                <strong>Vaccination: <td th:text="${appointment.vaccination}"></td></strong>
+                            </div>
+                            <div class="col-2">
+                                <strong>Dose:1</strong>
+                            </div>
+                            <div class="col-6" th:if="${appointment.doctor}">
+                                <strong style="float: right;"><td th:text="${appointment.doctor.firstName}+' '+${appointment.doctor.lastName}"></td></strong>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4 pt-4">
+                                <strong><td th:text="${#dates.format(appointment.appointmentAt, 'dd-MM-yyyy')}"></td></strong>
+                            </div>
+                            <div class="col-6 pt-4">
+                                <p style="color: gray; font-weight: 600;"><td th:text="${appointment.status}"></td></p>
+                            </div>
+                        </div>
+                    </div>
+                </tr>
+            </section>
+            
+            <div class="mt-4">
+                <a href="/dashboard" style="text-decoration: none;color: black;">
+                    <button class="btn btn-light border" style="float: right">Previous</button>
+                </a>
+            </div>
+            
+            
+        </div>
+        <script>
+            $(document).ready(function () {
+                var options = {year: 'numeric', month: 'long', day: 'numeric', hour: "numeric", minute: "numeric"};
+                var date = new Date();
+                var now = date.toLocaleString("en-IN", options);
+                $("#current-time").text(now.replace("at", ""));
+                setInterval(function () {
+                    date = new Date();
+                    now = date.toLocaleString("en-IN", options);
+                    $("#current-time").text(now.replace("at", ""));
+                }, 1000);
+            });
+        </script>
+        
+    </div>
+</html>

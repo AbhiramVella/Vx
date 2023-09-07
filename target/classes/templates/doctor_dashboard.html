@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html layout:decorate="~{base}">
+    <head>
+        <title>Vaccine Care</title>
+    </head>
+    <div layout:fragment="content">
+        <div>
+            <p> Hi, Dr. <span th:text="${user.firstName}"></span> <span th:text="${user.lastName}"></span>
+        </div>
+    </div>
+</html>

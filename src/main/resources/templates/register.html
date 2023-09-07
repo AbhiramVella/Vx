@@ -1,0 +1,68 @@
+
+<div class="row" th:fragment="register">
+    <div>
+        <a href="/"><img th:src="@{/images/logo.png}" /></a>
+    </div>
+    <div style="text-align: center;">
+        <h2><span th:text="${name}"></span> Registration Details</h2>
+        <div class="container p-2">
+            <form method="POST" th:action="@{/signup}" th:object="${user}" action="#">
+                <div class="col-4 offset-4 p-2">
+                    <label for="firstName" class="form-label" style="float: left;">First Name</label>
+                    <input type="text" class="form-control" id="firstName" th:field="*{firstName}" required>
+                </div>
+                <div class="col-4 offset-4 p-2">
+                    <label for="lastName" class="form-label" style="float: left;">Last Name</label>
+                    <input type="text" class="form-control" th:field="*{lastName}" id="lastName" required>
+                </div>
+                <div class="col-4 offset-4 p-2">
+                    <label for="age" class="form-label" style="float: left;">Age</label>
+                    <input type="number" class="form-control" th:field="*{age}" id="age" required>
+                </div>
+                <div class="col-4 offset-4 p-2">
+                    <label for="emailId" class="form-label" style="float: left;">Email</label>
+                    <input type="email" class="form-control" th:field="*{email}" id="email" required>
+                </div>
+                <div class="col-4 offset-4 p-2">
+                    <label for="mobileNumber" class="form-label" style="float: left;">Mobile No</label>
+                    <input type="text" class="form-control" th:field="*{mobileNumber}" id="mobile" required>
+                </div>
+                <div class="col-4 offset-4 p-2">
+                    <label for="address" class="form-label" style="float: left;">Address</label>
+                    <input type="text" class="form-control" th:field="*{address}" id="address" required>
+                </div>
+                <div class="col-4 offset-4 p-2">
+                    <label for="password" class="form-label" style="float: left;">Password</label>
+                    <input type="password" class="form-control" th:field="*{password}" id="password" required>
+                </div>
+                <div class="col-4 offset-4 p-2">
+                    <label for="confirmPassword" class="form-label" style="float: left;">Confirm Password</label>
+                    <input type="password" class="form-control" id="confirmPassword" required>
+                    <span class="visually-hidden" style="color: red;" id="error-message">Password and confirm password must same.</span>
+                </div>
+                 <div class="col-4 offset-4 p-2 visually-hidden">
+                    <label for="userType" class="form-label" style="float: left;">User Type</label>
+                    <input type="text" class="form-control" id="userType" th:field="*{userType}">
+                </div>
+                <button type="submit" class="btn btn-light p-2" id="submit-button" disabled>Next</button>
+            </form>
+        </div>
+        <p class="p-3">Already existing customers can <a th:href="${loginLink}" style="text-decoration: none;color: black;font-weight: 600;">LOGIN</a></p>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $(document).on('input',"#confirmPassword",function(e){
+                $("#error-message").addClass("visually-hidden");
+                var confirmPassword = $(this).val();
+                var password = $("#password").val();
+
+                if(confirmPassword !== password){
+                    $("#error-message").removeClass("visually-hidden");
+                }else{
+                    $("#submit-button").prop("disabled", false);
+                }
+            });
+        });
+
+    </script>
+</div>

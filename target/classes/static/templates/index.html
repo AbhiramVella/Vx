@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html layout:decorate="~{base}">
+    <head>
+        <title>Vaccine Care</title>
+    </head>
+    <div layout:fragment="content">
+        <div>
+            <a href="/"><img th:src="@{/images/logo.png}" /></a>
+        </div>
+        <div style="text-align: center;">
+            <h2>Vx Life</h2>
+            <div class="container" style="padding-top: 68px">
+                <div class="row justify-content-center">
+
+                    <div class="col-3 me-3" style="border: 1px solid black; min-height:450px;">
+                        <a href="/login?userType=admin" style="text-decoration: none;color: black;">
+                            <h3 style="margin-top:100px">ADMIN</h3>
+                            <h3 style="margin-top: 150px">APPROVED AN APPOINTMENT</h3>
+                        </a>
+                    </div>
+
+                    <div class="col-3 me-3" style="border: 1px solid black; min-height:450px;">
+                        <a href="/login?userType=patient" style="text-decoration: none;color: black;">
+                            <h3 style="margin-top:100px">PATIENT</h3>
+                            <h3 style="margin-top:150px">BOOK AN APPOINTMENT</h3>
+                        </a>
+                    </div>
+                    <div class="col-3" style="border: 1px solid black; min-height:450px;">
+                        <a href="/login?userType=doctor" style="text-decoration: none;color: black;">
+                            <h3 style="margin-top:100px">DOCTOR</h3>
+                            <h3 style="margin-top:150px">MANAGE AN APPOINTMENT</h3>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html layout:decorate="~{base}">
+    <head>
+        <title>Doctors list</title>
+    </head>
+    <div layout:fragment="content">
+        <div class="container mt-4">
+            <div th:if="${doctors}">
+                <h2>All Doctors</h2>
+                <tr th:each="Doctor : ${doctors}">
+                    <div class="border mt-2">
+                        <div class="row p-2">
+                            <div class="col-3"><p><td th:text="'Dr. '+${Doctor.firstName}+' '+${Doctor.lastName}"></td></p></div>
+                            <div class="col-3"><p><td th:text="${Doctor.email}"></td></p></div>
+                            <div class="col-3"><p><td th:text="${Doctor.mobileNumber}"></td></p></div>
+                            <div class="col-3"><p style="color: gray;"><td th:text="${Doctor.status}"></td></p></div>
+                            <div><h5>Address - <td th:text="${Doctor.address}"></td></h5> </div>
+                        </div>
+                    </div>
+                </tr>
+            </div>
+            
+            <div th:if="!${doctors}">
+                <h2> No Doctors</h2>
+            </div>
+            <div class="mt-4">
+                <a href="/dashboard" style="text-decoration: none;color: black;">
+                    <button class="btn btn-light border" style="float: right">Previous</button>
+                </a>
+            </div>
+        </div>
+    </div>
+</html>

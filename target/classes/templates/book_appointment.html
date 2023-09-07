@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html layout:decorate="~{base}">
+    <head>
+        <title>Doctor Registration Details</title>
+    </head>
+    <div layout:fragment="content">
+        <div class="container m-5">
+            <h2 style="text-align: center">Patient Booking Appointment</h2>
+            <div class="row align-self-center">
+                <form method="post" th:action="@{/book_appointment}" th:object="${appointment}">
+                    <div class="col-4 offset-4 p-2">
+                        <label for="doctor" class="form-label" style="float: left;">Choose Doctor</label>
+                        <select class="form-control" id="doctor" name="doctor" th:field="*{doctor}" required>
+                            <option value="">Select doctor</option>
+                            <option 
+                                th:each="Doctor : ${doctors}" 
+                                th:value="${Doctor.id}" 
+                                th:text="${Doctor.firstName}+' '+${Doctor.lastName}"></option>
+                        </select>
+                    </div>
+                    <div class="col-4 offset-4 p-2">
+                        <label for="appointment-date" class="form-label" style="float: left;">Choose Date</label>
+                        <input type="date" class="form-control" name="appointment-date" id="appointmentDate" th:field="*{appointmentAt}" required>
+                    </div>
+                    <div class="col-4 offset-4 p-2">
+                        <label for="vaccination" class="form-label" style="float: left;">Choose Vaccination</label>
+                        <select class="form-control" id="vaccination" name="vaccination" th:field="*{vaccination}" required>
+                            <option value="">Select Vaccination</option>
+                            <option 
+                                th:each="Vaccination : ${vaccinations}" 
+                                th:value="${Vaccination.name}" 
+                                th:text="${Vaccination.name}"></option>
+                        </select>
+                    </div>
+                    <div class="col-4 offset-4 p-2">
+                        <a href="/dashboard" style="text-decoration: none;color: black;"><button type="button" class="btn btn-light" style="float: left">Previous</button></a>
+                        <button type="submit" class="btn btn-light" style="float: right">Next</button>
+                    </div>
+                    
+                </form>
+            </div>
+            
+        </div>
+    </div>
+</html>

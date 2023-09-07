@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html layout:decorate="~{base}">
+    <head>
+        <title>Doctor Registration Details</title>
+    </head>
+    <div layout:fragment="content">
+        <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
+            <input hidden type="submit" value="Sign Out"/>
+        </form> 
+        <div class="mt-5">
+            <h1><span th:text="${user.firstName}"></span> <span th:text="${user.lastName}"></span></h1>
+            <div><span class="lable">Age:</span> <span th:text="${user.age}"></span></div>
+            <div class="mt-4">
+                <div class="pb-3"><span class="lable pe-2">FIRST NAME</span> <span th:text="${user.firstName}" class="pe-3"></span> <span class="lable pe-3">LAST NAME</span> <span th:text="${user.lastName}"></span></div>
+                <div class="pb-3"><span class="lable pe-5">EMAIL </span> <span th:text="${user.email}"></span></div>
+                <div class="pb-3"><span class="lable pe-2">MOBILE NO</span> <span th:text="${user.mobileNumber}"></span></div>
+                <div class="pb-3"><span class="lable pe-3">ADDRESS </span> <span th:text="${user.address}"></span></div>
+            </div>
+            
+            <div class="mt-4">
+                <a href="javascript: document.logoutForm.submit()" style="text-decoration: none;color: black;">
+                    <button class="btn btn-light border" style="float: left">Logout</button>
+                </a>
+            </div>
+            
+            <div class="mt-4">
+                <a href="/dashboard" style="text-decoration: none;color: black;">
+                    <button class="btn btn-light border" style="float: right">Previous</button>
+                </a>
+            </div>
+        </div>
+    </div>
+</html>

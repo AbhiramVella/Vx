@@ -1,0 +1,23 @@
+<div th:fragment="doctor_appointments">
+    <tr th:each="Appointment : ${appointments}">
+        <div class="border border-secondary p-4 mt-3">
+            <div class="row">
+                <div class="col-10">
+                    <strong><td th:text="${Appointment.patient.firstName}+' '+${Appointment.patient.lastName}"></td></strong>
+                </div>
+                <div class="col-2">
+                    <strong>Age:<td th:text="${Appointment.patient.age}"></td></strong>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-8 pt-4">
+                    <strong>Vaccination:<td th:text="${Appointment.vaccination}"></td></strong>
+                </div>
+                <div class="col-4 pt-3">
+                    <button class="btn btn-light border" th:data-appointment_id="${Appointment.id}" id="appointment_accept">Accept</button>
+                    <button class="btn btn-light border" th:data-appointment_id="${Appointment.id}" id="appointment_reject">Decline</button>
+                </div>
+            </div>
+        </div>
+    </tr>
+</div>

@@ -1,0 +1,23 @@
+<div th:fragment="patients">
+    <div class="mt-2 me-2">
+        <div class="row">
+            <div class="col-11">
+                <div class="input-group">
+                    <span class="input-group-append">
+                        <button class="btn btn-outline-secondary border border-end-0 ms-n5 rounded-0" type="button">
+                            <img th:src="@{/images/search.svg}" />
+                        </button>
+                    </span>
+                    <input class="form-control border border-start-0 rounded-0" type="search" placeholder="search" id="search-input">
+                </div>
+            </div>
+            <div class="col-1 mt-2">
+                <img th:src="@{/images/filter.svg}" />
+            </div>
+        </div>
+    </div>
+    <div id="doctor_appointments">
+        <div th:include="~{doctor_appointments :: doctor_appointments}"></div>
+    </div>
+    
+</div>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html layout:decorate="~{base}">
+    <head>
+        <title>Vaccine Care</title>
+    </head>
+    <div layout:fragment="content">
+        <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
+            <input hidden type="submit" value="Sign Out"/>
+        </form> 
+        <div>
+            <a href="javascript: document.logoutForm.submit()"><img th:src="@{/images/logo.png}" /></a>
+        </div>
+        <div style="text-align: center;">
+            <h2>Sorry! Your account is not active.</h2>
+        </div>
+    </div>
+</html>

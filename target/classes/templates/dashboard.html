@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html layout:decorate="~{base}">
+    <head>
+        <title>Vaccine Care</title>
+        <style>
+            .search {
+                background: url(@{images/search.svg}) no-repeat scroll 7px 7px;
+                padding-left:30px;
+            }
+        </style>
+    </head>
+    <div layout:fragment="content" th:with="userType = ${user.userType }" class="p-4">
+        <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
+            <input hidden type="submit" value="Sign Out"/>
+        </form> 
+        <div class="row">
+            <div class="col-6">
+                <div id="current-time" style="padding-top: 40px;"></div>
+                <div style="padding-top: 10rem">
+                    <div th:if="${#strings.toString(userType)== 'Patient'}">
+                        <h2> Hi, <span th:text="${user.firstName}"></span> <span th:text="${user.lastName}"></span></h2>
+                        <p>Here are your upcoming appointments</p>
+                        <div class="col-4 p-2 px-0">
+                            <a href="/book_appointment" style="text-decoration: none;color: black;"><button class="btn btn-light p-2 border">Book an Appointment</button></a>
+
+                        </div>
+                        <div class="col-4 p-2 px-0">
+                            <a href="/vaccines" style="text-decoration: none;color: black;"><button class="btn btn-light p-2 border">Vaccination Record</button></a>
+                        </div>
+                        <div class="pt-4"><a href="/profile" style="text-decoration: none;color: black;"><img th:src="@{/images/user-circle.svg}" /></a></div>
+                    </div>
+                    <div th:if="${#strings.toString(userType)=='Admin'}">
+                        <h2> Dear, <span th:text="${user.firstName}"></span> <span th:text="${user.lastName}"></span></h2>
+                        <p>Please approve the doctors in your hospital</p>
+                        <div class="col-4 p-2 px-0">
+                            <a href="/doctors" style="text-decoration: none;color: black;">
+                                <button class="btn btn-light p-2 border">Doctors List</button>
+                            </a>
+                        </div>
+                        <div class="col-4 p-2 px-0">
+                            <a href="javascript: document.logoutForm.submit()" style="text-decoration: none;color: black;">
+                                <button class="btn btn-light p-2 border">Logout</button>
+                            </a>
+                        </div>
+                    </div>
+                    <div th:if="${#strings.toString(userType)=='Doctor'}">
+                        <h2> Hi, Dr. <span th:text="${user.firstName}"></span> <span th:text="${user.lastName}"></span></h2>
+                        <p>Here are your patients for today</p>
+                        <div class="pt-4"><a href="/profile" style="text-decoration: none;color: black;"><img th:src="@{/images/user-circle.svg}" /></a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 p-4">
+                <div th:if="${#strings.toString(userType)== 'Patient'}">
+                    <div th:include="~{appointments :: appointments}"></div>
+                </div>
+                <div th:if="${#strings.toString(userType)=='Admin'}">
+                    <div id="doctors_list">
+                        <div th:include="~{doctors :: doctors}"></div>
+                    </div>
+                </div>
+                <div th:if="${#strings.toString(userType)=='Doctor'}">
+                    <div th:include="~{patients_list :: patients}"></div>
+                </div>
+
+            </div>
+        </div>
+        <script>
+            $(document).ready(function () {
+                var options = {year: 'numeric', month: 'long', day: 'numeric', hour: "numeric", minute: "numeric"};
+                var token = $("meta[name='_csrf']").attr("content");
+                var header = $("meta[name='_csrf_header']").attr("content");
+                var date = new Date();
+                var now = date.toLocaleString("en-IN", options);
+                $("#current-time").text(now.replace("at", ""));
+                setInterval(function () {
+                    date = new Date();
+                    now = date.toLocaleString("en-IN", options);
+                    $("#current-time").text(now.replace("at", ""));
+                }, 1000);
+                
+                /* Appointment status update */
+                function updateAppointment(data){
+                    $.ajax({
+                        url:'/update_appointment_status',
+                        contentType: "application/json",
+                        method: "post",
+                        beforeSend: function(request) {
+                            request.setRequestHeader(header, token);
+                        },
+                        data: JSON.stringify(data)
+                          
+                    }).done(function(res){
+                        $("#doctor_appointments").html(res);
+                    }).fail(function(err){
+                        console.log(err);
+                    });
+                }
+                
+                $(document).on('click',"#appointment_accept",function(){
+                    var id = $(this).data('appointment_id');
+                    var data = { 
+                        id: id,
+                        status:"Accepted"
+                    }
+                    updateAppointment(data);
+                    
+                });
+                
+                $(document).on('click',"#appointment_reject",function(){
+                    var id = $(this).data('appointment_id');
+                    var data = { 
+                        "id": id,
+                        "status":"Rejected"
+                    }
+                    updateAppointment(data);
+                });
+                /* End */
+                
+                /* User status update */
+                function updateUser(data){
+                    $.ajax({
+                        url:'/update_user_status',
+                        contentType: "application/json",
+                        method: "post",
+                        beforeSend: function(request) {
+                            request.setRequestHeader(header, token);
+                        },
+                        data: JSON.stringify(data)
+                          
+                    }).done(function(res){
+                        $("#doctors_list").html(res);
+                    }).fail(function(err){
+                        console.log(err);
+                    });
+                }
+                
+                $(document).on('click',"#user_accept",function(){
+                    var id = $(this).data('user_id');
+                    console.log("id ", id);
+                    var data = { 
+                        id: id,
+                        status:"Active"
+                    }
+                    updateUser(data);
+                    
+                });
+                
+                $(document).on('click',"#user_reject",function(){
+                    var id = $(this).data('user_id');
+                    var data = { 
+                        "id": id,
+                        "status":"InActive"
+                    }
+                    updateUser(data);
+                });
+                
+                /* End */
+                
+                $(document).on('input',"#search-input",function(e){
+                    console.log($(this).val());
+                    var url = '/doctor_appointments';
+                    var name = $(this).val();
+                    if(name){
+                        url = url+"?firstName="+name;
+                    }
+                    $.ajax({
+                        url:url
+                    }).done(function(res){
+                        //console.log(res);
+                        $("#doctor_appointments").html(res);
+                    }).fail(function(err){
+                        console.log(err);
+                    });
+                });
+            });
+        </script>
+    </div>
+</div>
+</html>

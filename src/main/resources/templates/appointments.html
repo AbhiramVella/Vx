@@ -1,0 +1,16 @@
+<div th:fragment="appointments">
+    <div class="border border-secondary p-3" >
+        <h4>Upcoming Appointment</h4>
+        <tr th:each="Appointment : ${appointments}">
+            <div class="border border-secondary p-3 mt-3">
+                <div class="row">
+                    <div class="col-6"><p th:text="${#dates.format(Appointment.appointmentAt, 'dd-MM-yyyy')}"></p></div>
+                    <div class="col-6"><p th:text="${Appointment.status}" style="float: right; color: gray;font-weight: 600;"></p></div>
+                </div>
+                <p><strong>Vaccination: </strong><td th:text="${Appointment.vaccination}"></td></p>
+                <p><strong>Doctor: </strong><td th:text="${Appointment.doctor.firstName}+' '+${Appointment.doctor.lastName}"></td></p>
+                <p><strong>Location: </strong><td th:text="${Appointment.patient.address}"></td></p>
+            </div>
+        </tr>
+    </div>
+</div>
